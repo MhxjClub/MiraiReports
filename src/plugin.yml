@@ -1,0 +1,12 @@
+main: com.kazuha.mireport.main
+author: KazuhaAyato
+version: 0.0.1
+name: MiraiReports
+description: well
+permissions:
+  miraireport.report:
+    default: true
+  miraireport.notify:
+    default: op
+  miraireport.admin:
+    default: op

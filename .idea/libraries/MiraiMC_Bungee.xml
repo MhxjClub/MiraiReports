@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="MiraiMC-Bungee">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../MiraiMC-Bungee.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

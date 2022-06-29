@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="MiraiReports">
+    <output-path>$PROJECT_DIR$/out/artifacts/MiraiReports</output-path>
+    <root id="archive" name="MiraiReports.jar">
+      <element id="module-output" name="MiraiReports" />
+    </root>
+  </artifact>
+</component>
