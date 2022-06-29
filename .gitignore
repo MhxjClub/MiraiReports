@@ -1,0 +1,5 @@
+
+*.class
+out/production/MiraiReports/config.yml
+out/artifacts/MiraiReports/MiraiReports.jar
+out/production/MiraiReports/plugin.yml
