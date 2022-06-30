@@ -29,6 +29,7 @@ public class miraireport extends Command {
             sender.sendMessage("§2.举报 <目标> <理由> §f 举报一个玩家");
             if(sender.hasPermission("miraireport.admin")){
                 sender.sendMessage("§2.ban <目标> §f 封禁一个玩家");
+                sender.sendMessage("§2.unban <目标> §f 解封一个玩家");
                 sender.sendMessage("§2.mute <目标> §f 禁言一个玩家");
                 sender.sendMessage("§2.kick <目标> §f 踢出一个玩家");
                 sender.sendMessage("§2.cmd <命令> §f (BC)执行一个命令");

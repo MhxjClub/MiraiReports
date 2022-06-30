@@ -1,5 +1,6 @@
 botaccount: 10001
 admin-group-num: 5000000
+player-group-num: 414410
 cooldown: 10
 cooldownmsg: "&c你需要等待%cd%秒后才能再次举报!"
 title: "&4&l收到新的玩家举报"
@@ -13,3 +14,5 @@ reportFormatinGame: "&f[&7STAFF&f]玩家&a%reporter% &f举报了 &c%reported% &f
 bancmd: "ban %target% 7d 违反服务器规则(不支持解封)"
 mutecmd: "mute %target% 1h 请注意言行"
 kickcmd: "kick %target% 注意言行"
+enable-widgets: true
+muteme: "muteme"

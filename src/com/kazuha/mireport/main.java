@@ -1,6 +1,7 @@
 package com.kazuha.mireport;
 
 import com.kazuha.mireport.botcontatmodule.RecievePlayerReport;
+import com.kazuha.mireport.botcontatmodule.widgets;
 import com.kazuha.mireport.playercommandmodule.miraireport;
 import com.kazuha.mireport.playercommandmodule.report;
 import net.md_5.bungee.api.ChatColor;
@@ -33,6 +34,7 @@ public class main extends Plugin {
             e.printStackTrace();
         }
         getProxy().getPluginManager().registerCommand(this, new report("report"));
+        getProxy().getPluginManager().registerListener(this, new widgets());
         getProxy().getPluginManager().registerCommand(this, new miraireport("miraireport"));
         getProxy().getPluginManager().registerListener(this, new RecievePlayerReport());
         getLogger().info("加载完成！");
