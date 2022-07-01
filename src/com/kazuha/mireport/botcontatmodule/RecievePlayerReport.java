@@ -40,15 +40,16 @@ public class RecievePlayerReport implements Listener {
             int player_count = ProxyServer.getInstance().getOnlineCount();
             StringBuffer output = new StringBuffer();
             output = output.append( "服务器在线玩家("+ player_count+ "):");
-            Iterator<String> iterator = ProxyServer.getInstance().getServers().keySet().iterator();
+            Iterator iterator = ProxyServer.getInstance().getServers().keySet().iterator();
             while (iterator.hasNext()){
+                Object cam = iterator.next();
                 StringBuffer nor = new StringBuffer();
-                Collection<ProxiedPlayer> player = ProxyServer.getInstance().getServerInfo(iterator.next()).getPlayers();
+                Collection<ProxiedPlayer> player = ProxyServer.getInstance().getServerInfo(cam.toString()).getPlayers();
                 List<ProxiedPlayer> players = Lists.newArrayList(player);
                 for(ProxiedPlayer p : players){
                     nor.append(p.getName()).append(", ");
                 }
-                output.append("\n[").append(ProxyServer.getInstance().getServerInfo(iterator.next()).getName()).append("]").append(nor);
+                output.append("\n[").append(ProxyServer.getInstance().getServerInfo(cam.toString()).getName()).append("]").append(nor);
             }
             e.sendMessage(output.toString());
         }
