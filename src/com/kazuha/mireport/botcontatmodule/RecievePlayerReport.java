@@ -49,7 +49,7 @@ public class RecievePlayerReport implements Listener {
                 for(ProxiedPlayer p : players){
                     nor.append(p.getName()).append(", ");
                 }
-                output.append("\n[").append(ProxyServer.getInstance().getServerInfo(cam.toString()).getName()).append("]").append(nor);
+                output.append("\n[").append(ProxyServer.getInstance().getServerInfo(cam.toString()).getName()).append("](").append("(").append(ProxyServer.getInstance().getServerInfo(cam.toString()).getPlayers().size()).append(")").append(nor);
             }
             e.sendMessage(output.toString());
         }
