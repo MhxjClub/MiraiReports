@@ -49,7 +49,7 @@ public class RecievePlayerReport implements Listener {
                 for(ProxiedPlayer p : players){
                     nor.append(p.getName()).append(", ");
                 }
-                output.append("\n[").append(ProxyServer.getInstance().getServerInfo(cam.toString()).getName()).append("](").append("(").append(ProxyServer.getInstance().getServerInfo(cam.toString()).getPlayers().size()).append(")").append(nor);
+                output.append("\n[").append(ProxyServer.getInstance().getServerInfo(cam.toString()).getName()).append("][").append(ProxyServer.getInstance().getServerInfo(cam.toString()).getPlayers().size()).append("]").append(nor);
             }
             e.sendMessage(output.toString());
         }
@@ -61,7 +61,7 @@ public class RecievePlayerReport implements Listener {
             String runcmd = e.getMessage().replace(".cmd ", "");
             ProxyServer.getInstance().getPluginManager().dispatchCommand(ProxyServer.getInstance().getConsole(), runcmd);
             e.sendMessage("成功执行该命令");
-        }
+        }        
         if(e.getMessage().startsWith(".ban ")){
             if(MiraiBot.getBot(config.getLong("botaccount")).getGroup(config.getLong("admin-group-num")).getMember(e.getSenderID()) == null){
                 e.sendMessage("你没有权限");
