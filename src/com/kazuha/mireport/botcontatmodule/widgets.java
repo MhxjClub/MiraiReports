@@ -21,7 +21,7 @@ public class widgets implements Listener {
         }
         if(e.getMessage() == main.config.getString("muteme")){
             Random random = new Random();
-            int bantime = random.nextInt(10);
+            int bantime = random.nextInt();
             MiraiBot.getBot(config.getLong("botaccount")).getGroup(main.config.getLong("player-group-num")).getMember(e.getSenderID()).setMute(bantime);
         }
     }

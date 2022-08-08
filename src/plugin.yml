@@ -2,6 +2,7 @@ main: com.kazuha.mireport.main
 author: KazuhaAyato
 version: 0.0.1
 name: MiraiReports
+depend: [LiteBans]
 description: well
 permissions:
   miraireport.report:

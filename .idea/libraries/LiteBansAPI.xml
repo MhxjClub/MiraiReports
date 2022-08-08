@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="LiteBansAPI">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../LiteBansAPI.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

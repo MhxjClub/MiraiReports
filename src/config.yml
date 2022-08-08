@@ -16,3 +16,9 @@ mutecmd: "mute %target% 1h 请注意言行"
 kickcmd: "kick %target% 注意言行"
 enable-widgets: true
 muteme: "muteme"
+unban: true
+plugin-db:
+  url: 127.0.0.1:3306
+  username: root
+  password: 12345
+  db: what_db_orwaht

@@ -1,7 +1,9 @@
 package com.kazuha.mireport;
 
 import com.kazuha.mireport.botcontatmodule.RecievePlayerReport;
+import com.kazuha.mireport.botcontatmodule.unban;
 import com.kazuha.mireport.botcontatmodule.widgets;
+import com.kazuha.mireport.playercommandmodule.bind;
 import com.kazuha.mireport.playercommandmodule.miraireport;
 import com.kazuha.mireport.playercommandmodule.report;
 import net.md_5.bungee.api.ChatColor;
@@ -15,10 +17,15 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class main extends Plugin {
     public static Configuration config;
     public static Plugin instance;
+    public static String jdbc_plugin_url;
     @Override
     public void onEnable() {
         instance = this;
@@ -33,6 +40,18 @@ public class main extends Plugin {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        jdbc_plugin_url = "jdbc:mysql://"+config.getString("plugin-db.url")+"/"+config.getString("plugin-db.db");
+        try {
+            Connection connection = DriverManager.getConnection(jdbc_plugin_url,config.getString("plugin-db.username"),config.getString("plugin-db.password"));
+            PreparedStatement statement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `mhxj_robot`.`robot` ( `qq` BIGINT NOT NULL , `uuid` MEDIUMTEXT NOT NULL , `name` TEXT NOT NULL ) ENGINE = InnoDB;");
+            statement.executeUpdate();
+            statement.close();
+            connection.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        getProxy().getPluginManager().registerListener(this, new unban());
+        getProxy().getPluginManager().registerCommand(this, new bind("qq"));
         getProxy().getPluginManager().registerCommand(this, new report("report"));
         getProxy().getPluginManager().registerListener(this, new widgets());
         getProxy().getPluginManager().registerCommand(this, new miraireport("miraireport"));
