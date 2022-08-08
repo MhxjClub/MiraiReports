@@ -99,7 +99,7 @@ public class unban implements Listener {
                     connection.close();
                     return;
                 }else{
-                    e.reply("验证已开始！请查看私聊获取验证码");
+                    e.reply("验证已开始！请查看私聊获取验证码!");
                     Random random = new Random();
                     StringBuilder builder = new StringBuilder();
                     builder = builder.append(random.nextInt());
