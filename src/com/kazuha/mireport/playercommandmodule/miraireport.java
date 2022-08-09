@@ -25,6 +25,9 @@ public class miraireport extends Command {
             if(sender.hasPermission("miraireport.admin")){
                 sender.sendMessage("§2/miraireport reload §f重载配置文件");
             }
+            sender.sendMessage("§f§lQQ群内可用命令列表");
+            sender.sendMessage("§2.unban §f自助解封(请先绑定QQ)");
+            sender.sendMessage("§2.bind §f绑定QQ");
             sender.sendMessage("§f§lQQ内可用命令列表(私聊机器人)");
             sender.sendMessage("§2.举报 <目标> <理由> §f 举报一个玩家");
             if(sender.hasPermission("miraireport.admin")){

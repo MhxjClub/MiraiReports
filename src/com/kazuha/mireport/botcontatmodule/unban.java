@@ -4,6 +4,7 @@ import com.kazuha.mireport.main;
 import jline.internal.Log;
 import litebans.api.Database;
 import me.dreamvoid.miraimc.api.MiraiBot;
+import me.dreamvoid.miraimc.bungee.event.MiraiFriendAddEvent;
 import me.dreamvoid.miraimc.bungee.event.MiraiGroupMessageEvent;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Listener;
@@ -33,9 +34,9 @@ public class unban implements Listener {
             return;
         }
         if(gash.containsKey(e.getSenderID())){
-            if((System.currentTimeMillis() - gash.get(e.getSenderID())) > 7200000){
+            if((System.currentTimeMillis() - gash.get(e.getSenderID())) < 9000000){
                 SimpleDateFormat format = new SimpleDateFormat("HH小时mm分钟ss秒");
-                e.reply("错误：冷却中！\n请等待"+ format.format(System.currentTimeMillis() - gash.get(e.getSenderID())) + "后再试");
+                e.reply("错误：冷却中！\n请等待"+ format.format(9000000 - (System.currentTimeMillis() - gash.get(e.getSenderID()))) + "后再试");
                 return;
             }
         }
@@ -43,7 +44,7 @@ public class unban implements Listener {
         Thread thread = new Thread(() -> {
             try {
                 Connection connection = DriverManager.getConnection(jdbc_plugin_url,config.getString("plugin-db.username"),config.getString("plugin-db.password"));
-                PreparedStatement statement = connection.prepareStatement("SELECT * from mreport where qq=?");
+                PreparedStatement statement = connection.prepareStatement("SELECT * from robot where qq=?");
                 statement.setLong(1,e.getSenderID());
                 ResultSet set = statement.executeQuery();
                 if(!set.next()){
@@ -54,6 +55,10 @@ public class unban implements Listener {
                         PreparedStatement st = Database.get().prepareStatement("SELECT * FROM {bans} WHERE uuid=?");
                         st.setString(1,uuid.toString());
                         ResultSet sest = st.executeQuery();
+                        if(!sest.next()){
+                            e.reply("错误：未知错误 请联系Frk");
+                            return;
+                        }
                         if(sest.getString("banned_by_uuid").equals("CONSOLE")){
                             ProxyServer.getInstance().getConsole().sendMessage(String.valueOf(e.getSenderID()) + "自助解封: " + set.getString("name"));
                             ProxyServer.getInstance().getPluginManager().dispatchCommand(ProxyServer.getInstance().getConsole(), "unban "+ set.getString("name")+" QQ群自助解封: "+String.valueOf(e.getSenderID()));
@@ -64,6 +69,8 @@ public class unban implements Listener {
                         }
                         sest.close();
                         st.close();
+                    }else{
+                        e.reply("你没有被封禁！解个寂寞");
                     }
 
                 }
@@ -77,6 +84,7 @@ public class unban implements Listener {
         });
         thread.start();
     }
+
     @EventHandler
     public void onBind(MiraiGroupMessageEvent e){
 
@@ -99,13 +107,11 @@ public class unban implements Listener {
                     connection.close();
                     return;
                 }else{
-                    e.reply("验证已开始！请查看私聊获取验证码!");
                     Random random = new Random();
-                    StringBuilder builder = new StringBuilder();
-                    builder = builder.append(random.nextInt());
-                    qqbind.put(Long.getLong(builder.toString()),e.getSenderID());
-                    qqexpire.put(Long.getLong(builder.toString()),System.currentTimeMillis());
-                    MiraiBot.getBot(config.getLong("botaccount")).getFriend(e.getSenderID()).sendMessage("你的QQ绑定验证码为:\n"+ builder.toString() + "\n请在游戏内输入/qq "+ builder.toString() +"以完成绑定！");
+                    Long ran = Long.parseLong(String.valueOf(random.nextInt(1145141919)));
+                    qqbind.put(ran,e.getSenderID());
+                    qqexpire.put(ran,System.currentTimeMillis());
+                    e.reply("你的QQ绑定验证码为:"+ ran + "\n请在游戏内输入/qq "+ ran +"以完成绑定！");
                 }
                 set.close();
                 statement.close();
