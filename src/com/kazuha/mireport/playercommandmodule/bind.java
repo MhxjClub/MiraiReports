@@ -5,10 +5,7 @@ import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Command;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -38,6 +35,15 @@ public class bind extends Command {
             } else {
                 try {
                     Connection connection = DriverManager.getConnection(jdbc_plugin_url, config.getString("plugin-db.username"), config.getString("plugin-db.password"));
+                    PreparedStatement state = connection.prepareStatement("SELECT * FROM `robot` WHERE `name`=?");
+                    state.setString(1, commandSender.getName());
+                    ResultSet set = state.executeQuery();
+                    if(set.next()){
+                        commandSender.sendMessage("§c你已经绑定过了！");
+                        set.close();
+                        connection.close();
+                        return;
+                    }
                     PreparedStatement statement = connection.prepareStatement("INSERT INTO `robot`(`qq`, `uuid`, `name`) VALUES (?,?,?)");
                     statement.setLong(1, qqbind.get(Long.parseLong(strings[0])));
                     statement.setString(2, String.valueOf(ProxyServer.getInstance().getPlayer(commandSender.getName()).getUniqueId()));

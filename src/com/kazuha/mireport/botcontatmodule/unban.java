@@ -34,9 +34,9 @@ public class unban implements Listener {
             return;
         }
         if(gash.containsKey(e.getSenderID())){
-            if((System.currentTimeMillis() - gash.get(e.getSenderID())) < 9000000){
+            if((System.currentTimeMillis() - gash.get(e.getSenderID())) < 900000L){
                 SimpleDateFormat format = new SimpleDateFormat("HH小时mm分钟ss秒");
-                e.reply("错误：冷却中！\n请等待"+ format.format(9000000 - (System.currentTimeMillis() - gash.get(e.getSenderID()))) + "后再试");
+                e.reply("错误：冷却中！\n请等待"+ format.format(900000L - (System.currentTimeMillis() - gash.get(e.getSenderID()))) + "后再试");
                 return;
             }
         }
@@ -59,13 +59,13 @@ public class unban implements Listener {
                             e.reply("错误：未知错误 请联系Frk");
                             return;
                         }
-                        if(sest.getString("banned_by_uuid").equals("CONSOLE")){
+                        if(!sest.getString("banned_by_name").equalsIgnoreCase("LAC")){
+                            e.reply("抱歉，由于你是管理组成员封禁 无法将你解封. 请联系"+ sest.getString("banned_by_name"));
+                        }else{
                             ProxyServer.getInstance().getConsole().sendMessage(String.valueOf(e.getSenderID()) + "自助解封: " + set.getString("name"));
                             ProxyServer.getInstance().getPluginManager().dispatchCommand(ProxyServer.getInstance().getConsole(), "unban "+ set.getString("name")+" QQ群自助解封: "+String.valueOf(e.getSenderID()));
                             e.reply("解封成功！");
                             gash.put(e.getSenderID(),System.currentTimeMillis());
-                        }else{
-                            e.reply("抱歉，由于你是管理组成员封禁 无法将你解封. 请联系"+ sest.getString("banned_by_name"));
                         }
                         sest.close();
                         st.close();
