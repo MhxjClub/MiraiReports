@@ -11,14 +11,14 @@ import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 
 import javax.xml.crypto.Data;
+import java.lang.reflect.Proxy;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.UUID;
 
-import static com.kazuha.mireport.main.config;
-import static com.kazuha.mireport.main.jdbc_plugin_url;
+import static com.kazuha.mireport.main.*;
 import static com.kazuha.mireport.playercommandmodule.bind.qqbind;
 import static com.kazuha.mireport.playercommandmodule.bind.qqexpire;
 
@@ -27,21 +27,19 @@ public class unban implements Listener {
     @EventHandler
     public void onUnban(MiraiGroupMessageEvent e){
 
-        if(e.getGroupID() != main.config.getLong("player-group-num")){
-            return;
-        }
+
         if(!e.getMessage().equalsIgnoreCase(".unban")){
             return;
         }
         if(gash.containsKey(e.getSenderID())){
-            if((System.currentTimeMillis() - gash.get(e.getSenderID())) < 900000L){
-                SimpleDateFormat format = new SimpleDateFormat("HH小时mm分钟ss秒");
-                e.reply("错误：冷却中！\n请等待"+ format.format(900000L - (System.currentTimeMillis() - gash.get(e.getSenderID()))) + "后再试");
+            if((System.currentTimeMillis() - gash.get(e.getSenderID())) < 9000000){
+                SimpleDateFormat format = new SimpleDateFormat("hh小时mm分钟ss秒");
+                e.reply("错误：冷却中！\n请等待"+ format.format(900000 - (System.currentTimeMillis() - gash.get(e.getSenderID()))) + "后再试");
                 return;
             }
         }
         //CREATE TABLE `mhxj_robot`.`robot` ( `qq` BIGINT NOT NULL , `uuid` MEDIUMTEXT NOT NULL , `name` TEXT NOT NULL ) ENGINE = InnoDB;
-        Thread thread = new Thread(() -> {
+        ProxyServer.getInstance().getScheduler().runAsync(instance,()->{
             try {
                 Connection connection = DriverManager.getConnection(jdbc_plugin_url,config.getString("plugin-db.username"),config.getString("plugin-db.password"));
                 PreparedStatement statement = connection.prepareStatement("SELECT * from robot where qq=?");
@@ -59,6 +57,7 @@ public class unban implements Listener {
                             e.reply("错误：未知错误 请联系Frk");
                             return;
                         }
+                        sest.last();
                         if(!sest.getString("banned_by_name").equalsIgnoreCase("LAC")){
                             e.reply("抱歉，由于你是管理组成员封禁 无法将你解封. 请联系"+ sest.getString("banned_by_name"));
                         }else{
@@ -81,21 +80,20 @@ public class unban implements Listener {
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
+
         });
-        thread.start();
+
     }
 
     @EventHandler
     public void onBind(MiraiGroupMessageEvent e){
 
-        if(e.getGroupID() != main.config.getLong("player-group-num")){
-            return;
-        }
+
         if(!e.getMessage().equals(".bind")){
             return;
         }
         //CREATE TABLE `mhxj_robot`.`robot` ( `qq` BIGINT NOT NULL , `uuid` MEDIUMTEXT NOT NULL , `name` TEXT NOT NULL ) ENGINE = InnoDB;
-        Thread thread = new Thread(() -> {
+        ProxyServer.getInstance().getScheduler().runAsync(instance,()->{
             try {
                 Connection connection = DriverManager.getConnection(jdbc_plugin_url,config.getString("plugin-db.username"),config.getString("plugin-db.password"));
                 PreparedStatement statement = connection.prepareStatement("SELECT * from robot where qq=?");
@@ -121,6 +119,7 @@ public class unban implements Listener {
                 throwables.printStackTrace();
             }
         });
-        thread.start();
+
+
     }
 }

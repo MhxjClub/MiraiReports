@@ -1,6 +1,6 @@
 main: com.kazuha.mireport.main
 author: KazuhaAyato
-version: 1.4.2-NAA-C
+version: 1.9.1-REV-STABLE-FIX
 name: MiraiReports
 depend: [LiteBans]
 description: well

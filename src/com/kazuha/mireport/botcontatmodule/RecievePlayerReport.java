@@ -2,11 +2,13 @@ package com.kazuha.mireport.botcontatmodule;
 
 
 import com.google.common.collect.Lists;
+import com.kazuha.mireport.main;
+import com.kazuha.mireport.utils.SystemUtil;
+import com.kazuha.mireport.utils.publicutisl;
 import me.dreamvoid.miraimc.api.MiraiBot;
 import me.dreamvoid.miraimc.bungee.event.MiraiFriendMessageEvent;
 import me.dreamvoid.miraimc.bungee.event.MiraiGroupMessageEvent;
 import net.md_5.bungee.api.ProxyServer;
-import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
@@ -14,12 +16,32 @@ import net.md_5.bungee.event.EventHandler;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
+
 
 import static com.kazuha.mireport.main.*;
 import static com.kazuha.mireport.utils.publicutisl.*;
 
 public class RecievePlayerReport implements Listener {
+    @EventHandler
+    public void OnRequestOnPlayers(MiraiGroupMessageEvent e){
+        ProxyServer.getInstance().getScheduler().runAsync(instance,()->{
+            if(config.getStringList("cmd-wake").contains(e.getMessage())){
+                float nvzhuang = instance.getProxy().getOnlineCount();
+                double yeshi = instance.getProxy().getOnlineCount()/2.0;
+                int Online = ProxyServer.getInstance().getOnlineCount();
+                e.sendMessage(publicutisl.toQQMessage(
+                        "梦幻星际 Mhxj.Club",
+                        "=======================",
+                        "在线:"+ Online+ "人",
+                        "服务器CPU使用率: "+ SystemUtil.getCpuInfo()+" %",
+                        "服务器内存使用率: "+ SystemUtil.getMemory()+" %",
+                        "服务器负载: "+SystemUtil.getLoad()+" %",
+                        "whohh女装进度: "+nvzhuang+"%",
+                        "=======================",
+                        "Powered By KazuhaAyato"));
+            }
+        });
+    }
     @EventHandler
     public void RecieveGroup(MiraiGroupMessageEvent e){
         if(e.getGroupID()!=config.getLong("admin-group-num"))return;
