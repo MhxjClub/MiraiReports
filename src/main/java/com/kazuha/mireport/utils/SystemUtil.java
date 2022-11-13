@@ -10,8 +10,7 @@ import java.util.StringTokenizer;
 import com.kazuha.mireport.main;
 import com.sun.management.OperatingSystemMXBean;
 import net.md_5.bungee.api.ProxyServer;
-import org.hyperic.sigar.Sigar;
-import org.hyperic.sigar.SigarException;
+
 
 
 public class SystemUtil {

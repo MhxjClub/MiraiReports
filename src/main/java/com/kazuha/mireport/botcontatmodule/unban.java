@@ -1,7 +1,7 @@
 package com.kazuha.mireport.botcontatmodule;
 
 import com.kazuha.mireport.main;
-import jline.internal.Log;
+
 import litebans.api.Database;
 import me.dreamvoid.miraimc.api.MiraiBot;
 import me.dreamvoid.miraimc.bungee.event.MiraiFriendAddEvent;
@@ -34,7 +34,7 @@ public class unban implements Listener {
         if(gash.containsKey(e.getSenderID())){
             if((System.currentTimeMillis() - gash.get(e.getSenderID())) < 9000000){
                 SimpleDateFormat format = new SimpleDateFormat("hh小时mm分钟ss秒");
-                e.reply("错误：冷却中！\n请等待"+ format.format(900000 - (System.currentTimeMillis() - gash.get(e.getSenderID()))) + "后再试");
+                e.reply("错误：冷却中！\n请等待"+ format.format(9000000 - (System.currentTimeMillis() - gash.get(e.getSenderID()))) + "后再试");
                 return;
             }
         }
@@ -76,7 +76,7 @@ public class unban implements Listener {
                 set.close();
                 statement.close();
                 connection.close();
-                Thread.currentThread().stop();
+
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
@@ -114,7 +114,7 @@ public class unban implements Listener {
                 set.close();
                 statement.close();
                 connection.close();
-                Thread.currentThread().stop();
+
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
