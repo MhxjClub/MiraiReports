@@ -1,6 +1,7 @@
 package com.kazuha.mireport.playercommandmodule;
 
 import com.kazuha.mireport.main;
+import com.kazuha.mireport.playercommandmodule.ReportGui.drawGui;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
@@ -24,12 +25,16 @@ public class report extends Command {
             sender.sendMessage("§c权限不足");
             return;
         }
-        if(arg.length < 2){
-            sender.sendMessage("§c参数错误: /report <玩家名> <理由>");
+        if(arg.length < 1){
+            sender.sendMessage("§c参数错误: /report <玩家名> [理由]");
             return;
         }
         if(ProxyServer.getInstance().getPlayer(arg[0]) == null){
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&',main.config.getString("playernotOLmessage")));
+            return;
+        }
+        if(arg.length < 2){
+            new drawGui(ProxyServer.getInstance().getPlayer(sender.getName()), ProxyServer.getInstance().getPlayer(arg[0]));
             return;
         }
         if(cd.containsKey(sender)){
